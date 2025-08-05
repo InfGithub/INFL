@@ -1,9 +1,8 @@
 
-import os, json, zipfile
+import os, json
 from functools import wraps
 from time import time
 from itertools import product
-from io import BytesIO
 from . import translate
 
 
