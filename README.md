@@ -14,8 +14,8 @@ Then it can be imported.
 
 ## 如何使用它？
 
-如果你想使用它，请将其下载并复制到"C:\Users\INFINITIVE\AppData\Loal\Programs\Python\Python313\Lib\"目录下
+如果你想使用它，请将其下载并复制到"C:\Users\INFINITIVE\AppData\Loal\Programs\Python\Python313\Lib\"目录下。
 
-在本项目所在目录输入 pip install -r requirements.txt
+在本项目所在目录输入 pip install -r requirements.txt 。
 
-然后它将可被导入
+然后它将可被导入。
