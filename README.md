@@ -8,8 +8,6 @@ If you want to use it,please download it and copy to "C:\Users\INFINITIVE\AppDat
 
 Enter "pip install -r requirements.txt" in the directory where this project is located.
 
-Then it can be imported.
-
 ---
 
 ## 如何使用它？
@@ -18,4 +16,3 @@ Then it can be imported.
 
 在本项目所在目录输入 pip install -r requirements.txt 。
 
-然后它将可被导入。

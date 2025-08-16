@@ -3,7 +3,6 @@ import os, json
 from functools import wraps
 from time import time
 from itertools import product
-from . import translate
 
 
 def timer(func):
@@ -85,23 +84,22 @@ def compare(v1: str, v2: str, eq: bool=False):
             return False
 
 
+def int_to_bin(number: int, path: str) -> None:
+    """将整数转换为二进制文件并保存到指定路径。
 
-def json_translate(path: str, output_path: str, source_lang: str = "en", target_lang: str = "zh", model: str = "deepseek-r1:14b", temperature: int = 0.3, encoding="utf-8", max_context: int = 20, abouttext: str = None):
-    """翻译json值对"""
+    number: int - 要转换的整数
 
-    path = os.path.abspath(path)
-    output_path = os.path.join(os.path.abspath(output_path), os.path.basename(path))
+    path: str - 保存二进制文件的路径
+    """
+    number_bytes: int = (number.bit_length() + 7) // 8
+    byte_data: bytes = number.to_bytes(number_bytes, 'big')
+    with open(path, "wb") as file:
+        file.write(byte_data)
 
-    with open(path, "r+", encoding=encoding) as file:
-        data: dict = json.load(file)
-
-    data_items = data.items()
-    data_length: int = len(data_items)
-    for index, [key, value] in enumerate(data_items):
-        print(f"进度：{index+1}/{data_length} | 当前翻译条目：{key}")
-        
-        data[key] = translate.translate(text=value,
-                                        source_lang=source_lang, target_lang=target_lang, model=model, temperature=temperature, max_context=max_context, abouttext=abouttext)
-        print(f"-"*96)
-    with open(output_path, "w+", encoding=encoding) as file:
-        file.write(json.dumps(data, indent=4, ensure_ascii=False))
+def bin_to_int(path: str) -> int:
+    """从二进制文件读取整数并返回该整数。
+    
+    path: str - 二进制文件的路径"""
+    with open(path, "rb") as file:
+        byte_data = file.read()
+    return int.from_bytes(byte_data, 'big')

@@ -55,8 +55,8 @@ def get_Prime_is(n: int) -> bool:
 
     index: int = 3
     n_sqrt: int = math.ceil(math.sqrt(n))
-    while index*index <= n_sqrt:
-        if n%index == 0:
+    while index * index <= n_sqrt:
+        if n % index == 0:
             return  False
         index+=2
     return True
@@ -67,9 +67,6 @@ def multiplyList(List):
     for x in List:
         result = result * x
     return result
-
-class frac():
-    ...
 
 class frac():
 
@@ -83,14 +80,14 @@ class frac():
     def __str__(self):
         return f"frac: {self.nume}/{self.deno}"
 
-    def reduce(self) -> frac:
+    def reduce(self):
 
         Gcd: int = get_Greatest_Common_Divisor(self.nume, self.deno)
         nume = int(self.nume / Gcd)
         deno = int(self.deno / Gcd)
         return frac(nume, deno)
 
-    def __add__(self, other) -> frac:
+    def __add__(self, other):
 
         if other == 0:
             return self
@@ -108,7 +105,7 @@ class frac():
             b = int(Lcm / other.deno)
             return frac(self.nume*a + other.nume*b, self.deno*a)
 
-    def __mul__(self, other) -> frac:
+    def __mul__(self, other):
 
         return frac(self.nume*other.nume, self.deno*other.deno)
 
