@@ -66,7 +66,7 @@ def is_prime(n: int) -> bool:
         index+=2
     return True
 
-def multiplyList(List: list[float]) -> float:
+def multiply_list(List: list[float]) -> float:
     """
     计算一个浮点数列表中所有元素的乘积。
 
