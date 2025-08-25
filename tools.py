@@ -1,7 +1,7 @@
 import os
 from functools import wraps
-from time import time
 from itertools import product
+from time import time
 from typing import Hashable, TypeAlias, Union
 IndexOrKey: TypeAlias = Union[int, Hashable]
 

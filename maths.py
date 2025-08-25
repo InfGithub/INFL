@@ -1,4 +1,4 @@
-import math
+from math import ceil, sqrt
 
 def greatest_common_divisor(a: int, b: int) -> int:
     """
@@ -59,7 +59,7 @@ def is_prime(n: int) -> bool:
         return False
 
     index: int = 3
-    n_sqrt: int = math.ceil(math.sqrt(n))
+    n_sqrt: int = ceil(sqrt(n))
     while index <= n_sqrt:
         if n % index == 0:
             return  False
