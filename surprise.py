@@ -1,9 +1,19 @@
 from random import choice
-from time import strftime, localtime
 
 def cat() -> str:
+    """
+    生成随机猫猫表情。
 
-    """生成随机猫猫表情"""
+    Args:
+        None
+
+    Returns:
+        str: 随机猫猫表情。
+
+    Example:
+        >>> cat()
+        "=^..^= 喵~"
+    """
 
     cats: list = [
         "=^..^=",
@@ -20,8 +30,19 @@ def cat() -> str:
     return choice(cats) + text
 
 def music_disc() -> str:
+    """
+    获得随机 Minecraft 唱片。
 
-    """获得随机MC唱片"""
+    Args:
+        None
+
+    Returns:
+        str: 随机 Minecraft 唱片。
+    
+    Example:
+        >>> music_disc()
+        "C418 - 13"
+    """
     
     discs: list = [
         "C418 - 13",
@@ -47,7 +68,7 @@ def music_disc() -> str:
     ]
 
     get_disc: str = choice(discs)
-    text: str = ""
+    text: str = str()
 
     if get_disc == "Lena Raine - otherside":
         text = "（音乐之声！————用唱片机的音乐声为草甸增添生机。）"
