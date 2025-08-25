@@ -1,4 +1,3 @@
-
 from random import choice
 from time import strftime, localtime
 
@@ -54,8 +53,3 @@ def music_disc() -> str:
         text = "（音乐之声！————用唱片机的音乐声为草甸增添生机。）"
 
     return get_disc + text
-
-
-def __helloinit__():
-    print(f"Hello, Infinitive!  Time: {strftime("%Y-%m-%d %X", localtime())}")
-

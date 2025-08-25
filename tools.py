@@ -1,9 +1,9 @@
-
-import os, json
+import os
 from functools import wraps
 from time import time
 from itertools import product
-
+from typing import Hashable, TypeAlias, Union
+IndexOrKey: TypeAlias = Union[int, Hashable]
 
 def timer(func):
 
@@ -27,13 +27,9 @@ def rep(old_string: str, char: str, index: int) -> str:
     new_string = old_string[:index] + char + old_string[index+1:]
     return new_string
 
-def iteration_list(list_: list, index: list):
-
+def recursion_list_dict(value: Union[list, dict], path: IndexOrKey):
     """递归对列表取值"""
-    """print(iteration_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [2, 3]))"""
-    """echo: 6"""
-
-    return iteration_list(list_[index[0]], index[1:]) if isinstance(list_[index[0]], list) else list_[index[0]]
+    return recursion_list_dict(value[path[0]], path[1:]) if len(path) > 1 else value[path[0]]
 
 def generate_combinations(limits):
 
@@ -103,3 +99,23 @@ def bin_to_int(path: str) -> int:
     with open(path, "rb") as file:
         byte_data = file.read()
     return int.from_bytes(byte_data, 'big')
+
+def replace(string: str, raw: str, rep: str) -> str:
+    """替换字符串的子串，类似str.string()"""
+    if not raw:
+        return string
+    
+    result: list = list()
+    start: int = 0
+    len_string: int = len(string)
+    len_raw: int = len(raw)
+    
+    while start < len_string:
+        pos = string.find(raw, start)
+        if pos == -1:
+            result.append(string[start:])
+            break
+        result.append(string[start:pos])
+        result.append(rep)
+        start = pos + len_raw
+    return "".join(result)
