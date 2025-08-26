@@ -203,3 +203,151 @@ def replace(string: str, raw: str, rep: str) -> str:
         result.append(rep)
         start = pos + len_raw
     return "".join(result)
+
+def split_string(s: str, k: int) -> list[str]:
+    """
+    分割字符串。
+
+    Args:
+        s (str): 原始字符串。
+        k (int): 分割长度。
+
+    Returns:
+        list[str]: 分割后的字符串列表。
+
+    Example:
+        >>> split_string("helloworld", 3)
+        ["h", "ell", "owo", "rld"]
+    """
+    if len(s) % k != 0:
+        morelens: int = len(s) % k
+        return [s[:morelens], *split_string(s[morelens:], 4)]
+    if len(s) >= k:
+        return [s[i: i+k] for i in range(0, len(s), k)]
+    return list()
+
+class chinese_number:
+    """
+    中文数字类。
+
+    请调用其中的方法。
+    """
+
+    basic_numbers: list[str] = [
+        "零", "一", "二", "三", "四",
+        "五", "六", "七", "八", "九"
+    ]
+    unit_numbers: list[str] = [
+        "", "万", "亿",
+        "兆", "京", "垓", "秭",
+        "穰", "沟", "涧", "正",
+        "载", "极", "恒河沙", "阿僧祇",
+        "那由他", "不可思议", "无量", "大数",
+        "不可说", "不可计", "不可称", "不可量"
+    ]
+    else_units: dict[str, str] = {
+        "minus": "负",
+        "point": "点",
+        "zero": "零",
+        "one": "一",
+        "ten": "十",
+        "hundred": "百",
+        "thousand": "千",
+    }
+    unit_numbers_uppercase: dict[int, str] = {
+        "一": "壹", "二": "贰",
+        "三": "叁", "四": "肆",
+        "五": "伍", "六": "陆",
+        "七": "柒", "八": "捌",
+        "九": "玖", "十": "拾",
+        "百": "佰", "千": "仟",
+        "万": "萬","亿": "億"
+    }
+
+
+    def party(part: str) -> str:
+        """
+        处理四位数字。
+
+        Args:
+            part (str): 四位数字。
+
+        Returns:
+            str: 处理后的字符串。
+
+        Example:
+            >>> party("1234")
+            "一千二百三十四"
+        """
+        need_zero: bool = False
+        result: str = str()
+        part = part.zfill(4)
+
+        for i, n in enumerate(part):
+            if n != "0":
+                if need_zero:
+                    result += chinese_number.else_units["zero"]
+                    need_zero = False
+                if i == 2 and n == "1":
+                    if result == "":
+                        result += chinese_number.else_units["ten"]
+                    else:
+                        result += chinese_number.basic_numbers[int(n)] + chinese_number.else_units["ten"]
+                else:
+                    result += chinese_number.basic_numbers[int(n)]
+                    if i != 3:
+                        match i:
+                            case 0:
+                                result += chinese_number.else_units["thousand"]
+                            case 1:
+                                result += chinese_number.else_units["hundred"]
+                            case 2:
+                                result += chinese_number.else_units["ten"]
+            else:
+                if result != "":
+                    if part[i:].count("0") < len(part[i:]):
+                        need_zero = True
+        return result
+
+    def number_to_chinese(number: str) -> str:
+        """
+        将数字转换为中文。
+
+        Args:
+            number (str): 数字。
+
+        Returns:
+            str: 转换后的字符串。
+
+        Example:
+            >>> number_to_chinese("1234567890")
+            "一千二百三十四万五千六百七十八九"
+        """
+
+        if number[0] == "-":
+            return chinese_number.else_units["minus"] + chinese_number.number_to_chinese(number[1:])
+        
+        if "." in number:
+            parts = number.split(".")
+            return chinese_number.number_to_chinese(parts[0]) + chinese_number.else_units["point"] + "".join([chinese_number.basic_numbers[int(i)] for i in parts[1]])
+        
+        splited_number: list[str] = split_string(number, 4)
+        len_splited_number: int = len(splited_number)
+        result: str = "".join([chinese_number.party(item) + chinese_number.unit_numbers[len_splited_number - i - 1] for i, item in enumerate(splited_number)])
+        return result
+
+    def uppercase(number: str) -> str:
+        """
+        将数字转换为大写。
+
+        Args:
+            number (str): 数字。
+
+        Returns:
+            str: 转换后的字符串。
+
+        Example:
+            >>> uppercase("一千二百三十四万五千六百七十八九")
+            "壹仟贰佰叁拾肆万伍仟陆佰柒拾捌玖"
+        """
+        return "".join([chinese_number.unit_numbers_uppercase[i] for i in number])
