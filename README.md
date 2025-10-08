@@ -4,7 +4,7 @@
 
 ## How to use it?
 
-If you want to use it,please download it and copy to "C:\Users\INFINITIVE\AppData\Local\Programs\Python\Python313\Lib\".
+If you want to use it, please download it and copy to "C:\Users\INFINITIVE\AppData\Local\Programs\Python\Python313\Lib\".
 
 Enter "pip install -r requirements.txt" in the directory where this project is located.
 
