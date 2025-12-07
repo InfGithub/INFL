@@ -1,27 +1,24 @@
-
 from typing import Literal
 from time import strftime, localtime
 
-_log_path: str = "latest.log"
+log_path: str = "latest.log"
+log_level: str = "INFO"
 
-with open(_log_path, mode="w+", encoding="utf-8") as log_file:
-    log_file.close()
+levels: list[str] = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"]
+type LevelType = Literal["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"]
 
-def init(log_path: str = "latest.log"):
-    global _log_path
-    _log_path = log_path
-    with open(log_path, mode="w+", encoding="utf-8") as log_file:
-        ...
+levels_value: dict[str, int] = {l: i for i, l in enumerate(levels)}
+file_handle = open(log_path, mode="a", encoding="utf-8", buffering=1)
 
 def log(*texts: object,
-        level: Literal["TRACE", "DEBUG", "INFO","WARN", "ERROR", "FATAL"] = "INFO",
-        thread: str = "Main", **kwargs) -> tuple[object]:
-    global _log_path
+        level: LevelType = "INFO",
+        thread: str = "Main", **kwargs) -> None:
 
-    text: str = f"[{strftime("%H:%M:%S", localtime())}] [{thread}/{level\
-        }]: {" ".join([t.__str__() for t in texts])}"
-    with open(_log_path, mode="a", encoding="utf-8") as log_file:
-        log_file.write(text + "\n")
+    if levels_value[level] < levels_value[log_level]:
+        return
+
+    info: str = " ".join([t.__str__() for t in texts])
+    text: str = f"[{strftime("%H:%M:%S", localtime())}] [{thread}/{level}]: {info}"
+    file_handle.write(text + "\n")
 
     print(text, **kwargs)
-    return texts
