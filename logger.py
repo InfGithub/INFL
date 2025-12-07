@@ -2,13 +2,14 @@
 from typing import Literal
 from time import strftime, localtime
 
-_log_path: str= "./latest.log"
+_log_path: str = "latest.log"
+
 with open(_log_path, mode="w+", encoding="utf-8") as log_file:
     log_file.close()
 
-def init(log_path: str = "./latest.log"):
+def init(log_path: str = "latest.log"):
     global _log_path
-    _log_path= log_path
+    _log_path = log_path
     with open(log_path, mode="w+", encoding="utf-8") as log_file:
         ...
 
